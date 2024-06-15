@@ -1,8 +1,14 @@
 import os
+import logging
 from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
 from bitcoin_value import currency
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.WARNING
+)
 
 
 def create_reply_markup():
@@ -15,10 +21,13 @@ def create_reply_markup():
     return reply_markup
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.warning(f"Start received from {update.effective_user.username} ({update.effective_user.full_name})")
     await context.bot.send_message(chat_id=update.effective_chat.id, text="I check crypto prices for you!")
     await update.message.reply_text("Select currency:", reply_markup=create_reply_markup())
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    logging.warning(f"Price request received from {update.effective_user.username} ({update.effective_user.full_name})")
+
     bitcoin_value = currency("EUR")
     query = update.callback_query
 
