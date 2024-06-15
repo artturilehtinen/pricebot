@@ -15,7 +15,8 @@ def create_reply_markup():
     return reply_markup
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("I check crypto prices for you! Select currency:", reply_markup=create_reply_markup())
+    await context.bot.send_message(chat_id=update.effective_chat.id, text="I check crypto prices for you!")
+    await update.message.reply_text("Select currency:", reply_markup=create_reply_markup())
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     bitcoin_value = currency("EUR")
@@ -23,7 +24,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await query.answer()
 
-    await query.edit_message_text(text=f"{bitcoin_value:.2f} €")
+    await query.edit_message_text(text=f"BTC price is {bitcoin_value:.2f} €")
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Select currency:", reply_markup=create_reply_markup())
 
 
