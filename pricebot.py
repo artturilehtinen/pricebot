@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
+from bitcoin_value import currency
+
 
 def create_reply_markup():
     keyboard = [
@@ -16,11 +18,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("I check crypto prices for you! Select currency:", reply_markup=create_reply_markup())
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    bitcoin_value = currency("EUR")
     query = update.callback_query
 
     await query.answer()
 
-    await query.edit_message_text(text=f"0€")
+    await query.edit_message_text(text=f"{bitcoin_value:.2f} €")
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Select currency:", reply_markup=create_reply_markup())
 
 
