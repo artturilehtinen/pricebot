@@ -44,6 +44,6 @@ Python 3.8 +
 ### Steps
 1. Obtain telegram API key. [See here](https://core.telegram.org/bots/tutorial#obtain-your-bot-token)
 2. Set the API key value as environment variable called `TELEGRAM_API_KEY`
-3. Install requirements: ``pip install requirements.txt``
+3. Install requirements: ``pip install -r requirements.txt``
 4. Start: ``python pricebot.py``
 5. Access the bot via telegram
